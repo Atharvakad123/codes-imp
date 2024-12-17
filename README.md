@@ -63,7 +63,7 @@ class ApplianceRentalSystem {
         for(int i = 0; i < appList.size(); i++) {
             Appliance app = appList.get(i);
             if(app.getId() == id) {
-                appList.remove(id);
+                appList.remove(i);
                 System.out.println( "Appliance with ID " + id + " removed successfully." );
                 return;
             }
@@ -71,7 +71,7 @@ class ApplianceRentalSystem {
         System.out.println( "Appliance with ID " + id + " not found." );
     }
     
-    public int coundNonRentedAppliance() {
+    public int countNonRentedAppliance() {
         int ctr = 0;
         for(Appliance app : appList) {
             if(!app.getRented())
@@ -83,5 +83,26 @@ class ApplianceRentalSystem {
     public void displayAll() {
         for(Appliance app : appList)
             System.out.println(app);
+    }
+}
+class Main {
+    public static void main(String args[]) {
+        ApplianceRentalSystem ars = new ApplianceRentalSystem();
+        Scanner obj = new Scanner(System.in);
+        int size = obj.nextInt();
+        obj.nextLine();
+        for(int i = 0; i < size; i++)
+            ars.addAppliance(obj.nextLine());
+        int rentApplianceId = obj.nextInt();
+        int removeApplianceId = obj.nextInt();
+        System.out.println("Appliances in the Inventory: ");
+        ars.displayAll();
+        ars.rentAppliance(rentApplianceId);
+        ars.removeAppliance(removeApplianceId);
+        System.out.println("Updated Inventory:");
+        ars.displayAll();
+        int total = ars.countNonRentedAppliance();
+        System.out.println("Total non-rented appliances: " + total); 
+        obj.close();
     }
 }
